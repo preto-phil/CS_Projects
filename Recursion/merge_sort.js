@@ -27,6 +27,7 @@ function mergeSort(array) {
   return array;
 }
 
+// Helper function called in mergeSort() that repopulates array with sorted integers
 function merge(leftArray, rightArray, array) {
   let leftSize = Math.floor(array.length / 2);
   let rightSize = array.length - leftSize;
@@ -58,4 +59,4 @@ function merge(leftArray, rightArray, array) {
   return array;
 }
 
-console.log(mergeSort([5, 6, 3, 2, 1, 4]))
+console.log(mergeSort([5, 6, 3, 2, 1, 4]));
