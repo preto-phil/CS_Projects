@@ -24,7 +24,7 @@ class Tree {
   }
 
   insert(value, currentNode = this.root) {
-    if (currentNode.value == null) return Node(value);
+    if (currentNode.value == null) return new Node(value);
     if (currentNode.value == value) return;
     
     if (value < currentNode.value) {
@@ -33,6 +33,52 @@ class Tree {
       currentNode.right = insert(value, currentNode.right)
     }
     return currentNode;
+  }
+
+  delete(value, currentNode = this.root) {
+    if (currentNode.value == null) return currentNode;
+    
+    if (value < currentNode.value) {
+      currentNode.left = delete(value, currentNode.left);
+      return currentNode;
+    } else if (value > currentNode.value) {
+      currentNode.right = delete(value, currentNode.right);
+      return currentNode;
+    } 
+    // One child node
+    if (currentNode.left === null) {
+      return currentNode.right;
+    } else if (currentNode.right === null) {
+      return currentNode.left;
+    }
+
+    else {
+      let successorParent = currentNode;
+      let successor = currentNode.right;
+      while (successor.left !== null) {
+        successorParent = successor;
+        successor = successor.left;
+      }
+   
+      // Delete successor.  Since successor is always left child of its parent we can safely make successor's right right child as left of its parent.
+      // If there is no successor, then assign successor.right to successorParent.right
+      if (successorParent !== currentNode) {
+        successorParent.left = successor.right;
+      } else {
+        successorParent.right = successor.right;
+      }
+   
+      // Copy Successor Data to currentNode
+      currentNode.value = successor.value;
+   
+      // Delete Successor and return currentNode
+      return currentNode;
+    }
+  }
+
+  find(value, currentNode = this.root) {
+    if (root === null || currentNode.value === value) return currentNode;
+    return value < currentNode.value ? find(value, currentNode.left) : find(value, currentNode.right);
   }
 
 } 
