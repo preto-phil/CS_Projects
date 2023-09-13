@@ -1,7 +1,7 @@
 /* Node class */
 
 class Node {
-  constructor(value) {
+  constructor(value = null) {
     this.value = value;
     this.left = null;
     this.right = null;
@@ -120,9 +120,47 @@ class Tree {
     return postOrderList;
   }
 
-  height() {
-    
+  height(node = this.root) {
+    if (node == null) return 0;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
   }
+
+  depth(value, node = this.root, edgeCount = 0) {
+    if (node === null) return 0;
+    if (node.value === value) return edgeCount;
+
+    if (value < node.value) {
+      return this.depth(value, node.left, edgeCount += 1);
+    } else {
+      return this.depth(value, node.right, edgeCount += 1);
+    }
+  }
+
+  isBalanced() {
+
+  }
+
+  reBalance() {
+    const inOrderList = this.inOrder();
+    return this.buildTree(inOrderList);
+  }
+
+  prettyPrint(node, prefix = "", isLeft = true) {
+    if (node === null) {
+      return;
+    }
+    if (node.right !== null) {
+      prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    }
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    if (node.left !== null) {
+      prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+    }
+  };
 } 
 
 
