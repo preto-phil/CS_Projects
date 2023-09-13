@@ -1,8 +1,8 @@
 /* Node class */
 
 class Node {
-  constructor(num) {
-    this.num = num;
+  constructor(value) {
+    this.value = value;
     this.left = null;
     this.right = null;
   }
@@ -81,6 +81,48 @@ class Tree {
     return value < currentNode.value ? find(value, currentNode.left) : find(value, currentNode.right);
   }
 
+  levelOrder() {
+    if (this.root == null) return;
+  
+    let Q = [this.root];
+    let levelOrderList = [];
+  
+    while (Q > 0) {
+      current = Q[0];
+      if (current.left != null) Q.push(current.left);
+      if (current.right != null) Q.push(current.right);
+      levelOrderList[-1] = Q.pop();
+    }
+    return levelOrderList;
+  }
+
+  inOrder(currentNode = this.root, inOrderList = []) {
+    if (currentNode === null) return;
+    this.inOrder(currentNode.left, inOrderList);
+    inOrderList.push(currentNode);
+    this.inOrder(currentNode.right, inOrderList);
+    return inOrderList;
+  }
+
+  preOrder(currentNode = this.root, preOrderList = []) {
+    if (currentNode === null) return;
+    preOrderList.push(currentNode);
+    this.preOrder(currentNode.left, preOrderList);
+    this.preOrder(currentNode.right, preOrderList);
+    return preOrderList;
+  }
+
+  postOrder(currentNode = this.root, postOrderList = []) {
+    if (currentNode === null) return;
+    this.postOrder(currentNode.left, postOrderList);
+    this.postOrder(currentNode.right, postOrderList);
+    postOrderList.push(currentNode);
+    return postOrderList;
+  }
+
+  height() {
+    
+  }
 } 
 
 
@@ -99,3 +141,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 */
+
+
