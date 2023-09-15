@@ -11,6 +11,10 @@ const gameBoard = () => {
 }
 
 
+function validMove(r, c) {
+  return (r < 8 && r >= 0 && c < 8 && c >= 0 ) ? true : false;
+}
+
 function knightMoves(position, target) {
 
 }
