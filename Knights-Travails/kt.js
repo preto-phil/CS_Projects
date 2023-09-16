@@ -1,23 +1,36 @@
-class Cell {
-  constructor(x, y, distance) {
-    this.x = x;
-    this.y = y;
-    this.distance = distance;
+function Node(pos, path) {
+  return (pos[0] < 0 || pos[0] > 7 || pos[1] < 0 || pos[1] > 7) ? null : { pos, path };
+}
+
+function knightMoves([posX, posY], [tarX, tarY]) {
+
+  let q = [Node([posX, posY], [[posX, posY]])];
+
+  let currentNode = q.shift();
+
+  while (currentNode.pos[0] !== tarX || currentNode.pos[1] !== tarY) {
+    let moves = [
+      [currentNode.pos[0] + 2, currentNode.pos[1] - 1],
+      [currentNode.pos[0] + 2, currentNode.pos[1] + 1],
+      [currentNode.pos[0] - 2, currentNode.pos[1] - 1],
+      [currentNode.pos[0] - 2, currentNode.pos[1] + 1],
+      [currentNode.pos[0] + 1, currentNode.pos[1] - 2],
+      [currentNode.pos[0] + 1, currentNode.pos[1] + 2],
+      [currentNode.pos[0] - 1, currentNode.pos[1] - 2],
+      [currentNode.pos[0] - 1, currentNode.pos[1] + 2],
+    ];
+    moves.forEach( move => {
+      let node = Node(move, currentNode.path.concat([move]));
+      if (node) q.push(node);
+    });
+    currentNode = q.shift();
   }
+  console.log(`=> You made it in ${currentNode.path.length - 1} moves!  Here's your path:`);
+  currentNode.path.forEach( pos => {
+    console.log(pos);
+  });
 }
 
-function validMove(x, y) {
-  return (x < 8 && x >= 0 && y < 8 && y >= 0 ) ? true : false;
-}
-
-function knightMoves(position, target) {
-
-  // Different move combinations
-  let dx = [-2, -1, 1, 2, -2, -1, 1, 2];
-  let dy = [-1, -2, -2, -1, 1, 2, 2, 1];
-
-  let q = [];
-  // Starting position of knight
-  q.push(new Cell(knightPos[0], knightPos[1], 0));
-
-}
+knightMoves([0, 0], [7, 7]);
+knightMoves([0, 4], [4, 0]);
+knightMoves([1, 1], [6, 6]);
