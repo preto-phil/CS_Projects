@@ -3,11 +3,8 @@ function Node(pos, path) {
 }
 
 function knightMoves([posX, posY], [tarX, tarY]) {
-
   let q = [Node([posX, posY], [[posX, posY]])];
-
   let currentNode = q.shift();
-
   while (currentNode.pos[0] !== tarX || currentNode.pos[1] !== tarY) {
     let moves = [
       [currentNode.pos[0] + 2, currentNode.pos[1] - 1],
